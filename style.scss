@@ -35,4 +35,10 @@ body{
 .boxes{
     background-color: rgb(255, 218, 218);
     border: 2px solid black;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-family: 'Krona One', sans-serif;
 }
