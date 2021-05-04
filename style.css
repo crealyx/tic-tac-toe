@@ -36,7 +36,7 @@ body {
 }
 
 .boxes {
-  background-color: #ffdada;
+  background-color: #d7fcff;
   border: 2px solid black;
   text-align: center;
   display: -webkit-box;
@@ -48,6 +48,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  line-height: 0;
   font-size: 2rem;
   font-family: 'Krona One', sans-serif;
 }
