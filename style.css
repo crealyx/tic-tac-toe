@@ -8,26 +8,119 @@
           box-sizing: border-box;
 }
 
-h1 {
+body {
+  background-color: #ccdeff;
+}
+
+body h1, body h2, body button {
   font-family: 'Krona One', sans-serif;
+}
+
+body h1 {
   text-align: center;
-  margin: 50px 0px;
+  margin: 100px 0px;
   color: #ad0000;
 }
 
-body {
-  background-color: #f0fde2;
+body .menu {
+  margin-top: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.wrapper {
+body .menu .game-mode {
+  background-color: #eafff6;
+  outline: none;
+  border: 2px solid black;
+  width: 150px;
+  height: 100px;
+  padding: 5px;
+  font-size: 1.2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #00043d;
+  border-radius: 10px;
+  margin: 0px 50px;
+}
+
+body .menu .game-mode:hover {
+  background-color: #a1fffa;
+}
+
+body .menu .game-mode:focus {
+  background-color: #f00000;
+  color: white;
+}
+
+body .menu .game-mode:focus span {
+  color: black;
+}
+
+body .menu .game-mode span {
+  color: #e6160f;
+}
+
+body .player1, body .player2 {
+  color: #006097;
+}
+
+body .player1 span, body .player2 span {
+  color: black;
+}
+
+body .player2 span {
+  color: red;
+}
+
+body .players {
+  display: none;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+body .button-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 100px;
+}
+
+body .button-wrapper .play {
+  width: 120px;
+  height: 50px;
+  border: 2px solid black;
+  background-color: #b30000;
+  color: white;
+}
+
+body .wrapper {
   margin: 10px auto;
   max-width: 500px;
+  display: none;
 }
 
-.gameboard {
+body .wrapper .gameboard {
   display: -ms-grid;
   display: grid;
-  background-color: #eeeeee;
+  background-color: #5c0000;
   width: 100%;
   height: 400px;
   -ms-grid-columns: (1fr)[3];
@@ -35,8 +128,8 @@ body {
   border: 2px solid black;
 }
 
-.boxes {
-  background-color: #d7fcff;
+body .wrapper .gameboard .boxes {
+  background-color: #003B63;
   border: 2px solid black;
   text-align: center;
   display: -webkit-box;

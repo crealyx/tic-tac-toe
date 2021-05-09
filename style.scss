@@ -8,38 +8,117 @@
     box-sizing: border-box;
 }
 
-h1{
-    font-family: 'Krona One', sans-serif;
-    text-align: center;
-    margin: 50px 0px;
-    color: rgb(173, 0, 0);
-}
 
 body{
-    background-color: rgb(240, 253, 226);
+    background-color: rgb(204, 222, 255);
+
+    h1,h2,button,{
+        font-family: 'Krona One', sans-serif;
+    }
+    h1{
+        text-align: center;
+        margin: 100px 0px;
+        color: rgb(173, 0, 0);
+    }
+
+    .menu{
+        margin-top: 200px;
+        display: flex;
+        justify-content: center;
+        .game-mode{
+            background-color: rgb(234, 255, 246);
+            outline: none;
+            border: 2px solid black;
+            width: 150px;
+            height: 100px;
+            padding: 5px;
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: rgb(0, 4, 61);
+            border-radius: 10px;
+            margin: 0px 50px;
+
+            &:hover{
+                background-color: rgb(161, 255, 250);
+            }
+            &:focus{
+                background-color: rgb(240, 0, 0);
+                color: white;
+                span{
+                    color: rgb(0, 0, 0);
+                }
+            }
+            
+            span{
+                color: rgb(230, 22, 15);
+            }
+        }
+    }
+
+    .player1{
+        color: rgb(0, 96, 151);
+        span{
+            color: rgb(0, 0, 0);
+        }
+    }
+    .player2{
+        @extend .player1;
+        span{
+            color: rgb(255, 0, 0);
+        }
+    }
+
+    .players{
+        display: none;
+        justify-content: space-around;
+    }
+
+    .button-wrapper{
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+
+        .play{
+            width: 120px;
+            height: 50px;
+            border: 2px solid black;
+            background-color: rgb(179, 0, 0);
+            color: rgb(255, 255, 255);
+        }
+    }
+    .wrapper{
+        margin: 10px auto;
+        max-width: 500px;
+        display: none;
+
+        .gameboard{
+            display: grid;
+            background-color: rgb(92, 0, 0);
+            width: 100%;
+            height: 400px;
+            grid-template-columns: repeat(3,1fr);
+            border: 2px solid black;
+
+            .boxes{
+                background-color: #003B63;
+                border: 2px solid black;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                line-height: 0;
+                font-size: 2rem;
+                font-family: 'Krona One', sans-serif;
+            }
+        }
+    }
 }
 
-.wrapper{
-    margin: 10px auto;
-    max-width: 500px;
-}
-.gameboard{
-    display: grid;
-    background-color: rgb(238, 238, 238);
-    width: 100%;
-    height: 400px;
-    grid-template-columns: repeat(3,1fr);
-    border: 2px solid black;
-}
 
-.boxes{
-    background-color: rgb(215, 252, 255);
-    border: 2px solid black;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    line-height: 0;
-    font-size: 2rem;
-    font-family: 'Krona One', sans-serif;
-}
+
+
+
+
