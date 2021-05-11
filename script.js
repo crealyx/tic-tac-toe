@@ -31,11 +31,8 @@ let gameMode = '';
 
 
 
-
-
-
 const game = (() => {
-    let board = [9];
+    let board = ['','','','','','','','',''];
     let lastSign = '';
     let winnerArr = [];
     return{
@@ -58,12 +55,12 @@ const game = (() => {
         diagonalArr2.push(board[2],board[4],board[6]);
     
     
-        if(diagonalArr1.includes(undefined) == false && diagonalArr1.length === 3 && diagonalArr1.every(val => val === diagonalArr1[0])){
+        if(diagonalArr1.includes('') === false && diagonalArr1.includes(undefined) === false && diagonalArr1.length === 3 && diagonalArr1.every(val => val === diagonalArr1[0])){
             game.winnerArr = [0,4,8];
             return true;
         }
     
-        else if(diagonalArr2.includes(undefined) == false && diagonalArr2.length === 3 && diagonalArr2.every(val2 => val2 === diagonalArr2[0])){
+        else if(diagonalArr2.includes('') === false && diagonalArr2.includes(undefined) === false && diagonalArr2.length === 3 && diagonalArr2.every(val2 => val2 === diagonalArr2[0])){
             game.winnerArr = [2,4,6];
             return true;
         }
@@ -80,17 +77,17 @@ const game = (() => {
         rowArr2.push(board[3],board[4],board[5]);
         rowArr3.push(board[6],board[7],board[8]);
     
-        if(rowArr1.includes(undefined) == false && rowArr1.length === 3 && rowArr1.every(val => val === rowArr1[0])){
+        if(rowArr1.includes('') === false && rowArr1.includes(undefined) === false && rowArr1.length === 3 && rowArr1.every(val => val === rowArr1[0])){
             game.winnerArr = [0,1,2];
             return true;
         }
     
-        else if(rowArr2.includes(undefined) == false && rowArr2.length === 3 && rowArr2.every(val2 => val2 === rowArr2[0])){
+        else if(rowArr2.includes('') === false && rowArr2.includes(undefined) == false && rowArr2.length === 3 && rowArr2.every(val2 => val2 === rowArr2[0])){
             game.winnerArr = [3,4,5];
             return true;
         }
     
-        else if(rowArr3.includes(undefined) == false && rowArr3.length === 3 && rowArr3.every(val2 => val2 === rowArr3[0])){
+        else if(rowArr3.includes('') === false && rowArr3.includes(undefined) == false && rowArr3.length === 3 && rowArr3.every(val2 => val2 === rowArr3[0])){
             game.winnerArr = [6,7,8];
             return true;
         }
@@ -107,17 +104,17 @@ const game = (() => {
         columnArr2.push(board[1],board[4],board[7]);
         columnArr3.push(board[2],board[5],board[8]);
     
-        if(columnArr1.includes(undefined) == false && columnArr1.length === 3 && columnArr1.every(val => val === columnArr1[0])){
+        if(columnArr1.includes('') === false && columnArr1.includes(undefined) === false && columnArr1.length === 3 && columnArr1.every(val => val === columnArr1[0])){
             game.winnerArr = [0,3,6];
             return true;
         }
     
-        else if(columnArr2.includes(undefined) == false && columnArr2.length === 3 && columnArr2.every(val2 => val2 === columnArr2[0])){
+        else if(columnArr2.includes('') === false &&columnArr2.includes(undefined) === false && columnArr2.length === 3 && columnArr2.every(val2 => val2 === columnArr2[0])){
             game.winnerArr = [1,4,7];
             return true;
         }
     
-        else if(columnArr3.includes(undefined) == false && columnArr3.length === 3 && columnArr3.every(val2 => val2 === columnArr3[0])){
+        else if(columnArr3.includes('') === false && columnArr3.includes(undefined) === false && columnArr3.length === 3 && columnArr3.every(val2 => val2 === columnArr3[0])){
             game.winnerArr = [2,5,8];
             return true;
         }
@@ -166,7 +163,7 @@ const game = (() => {
             }
         }
         // Tie
-        else if(game.board.length === 9 && game.board.includes(undefined) == false){
+        else if(game.board.includes('') === false &&game.board.length === 9 && game.board.includes(undefined) == false){
             boxes.forEach(element => {
                 element.style.backgroundColor = 'black';
             });
@@ -216,11 +213,13 @@ const displayController = (() => {
     function playerVsPlayer(ev) {
         if(ev.target.classList.contains('boxes') && boxesIds.includes(ev.target.id)){
             if(playerTurn === 1 && ev.target.textContent === '' && gameOver === false){
+                console.log(boxes);
                 ev.target.textContent = player1.sign;
                 ev.target.style.color = 'white';
                 game.board[ev.target.id] = player1.sign
                 game.lastSign = player1.sign;
                 playerTurn++
+                console.log(game.board);
             }
             else if(playerTurn === 2 && ev.target.textContent === '' && gameOver === false){
                 ev.target.textContent = player2.sign;
@@ -233,23 +232,48 @@ const displayController = (() => {
         game.checkWinner(ev);
     }
 
-    function playerVsComputer() {
-        if(ev.target.classList.contains('boxes') && boxesIds.includes(ev.target.id)){
-            if(playerTurn === 1 && ev.target.textContent === '' && gameOver === false){
-                ev.target.textContent = player1.sign;
-                ev.target.style.color = 'white';
-                game.board[ev.target.id] = player1.sign
-                game.lastSign = player1.sign;
-                playerTurn++
-            }
-            else if(playerTurn === 2 && ev.target.textContent === '' && gameOver === false){
-                ev.target.textContent = player2.sign;
-                ev.target.style.color = 'rgb(255, 0, 0)';
-                game.board[ev.target.id] = player2.sign
+    function playerVsComputer(ev) {
+        if(ev.target.classList.contains('boxes') && boxesIds.includes(ev.target.id) && playerTurn === 1 && ev.target.textContent === '' && gameOver === false){
+            ev.target.textContent = player1.sign;
+            ev.target.style.color = 'white';
+            game.board[ev.target.id] = player1.sign
+            game.lastSign = player1.sign;
+            playerTurn++;
+            computerPlay();
+            console.log(game.board);
+            function computerPlay() {
+                filledBoxes = boxes.map(box => box.textContent !== '')
+                const findPositions = (first, second) => {
+                    const indexArr = [];
+                    first.forEach((element, index) => {
+                       if(second.includes(element)){
+                          indexArr.push(index);
+                       };
+                    });
+                    return indexArr;
+                };
+                const falseArr = [false];
+                const indexArr = findPositions(filledBoxes,falseArr);
+                const randomEmptyBox = indexArr[Math.floor(Math.random() * indexArr.length)];
+                boxes.forEach((item) => {
+                    console.log(item);
+                    console.log(randomEmptyBox);
+                    console.log(item.id);
+                    if(item.id == randomEmptyBox){
+                        console.log(item);
+                        console.log(item.textContent);
+                        console.log(randomEmptyBox);
+                        item.textContent = player2.sign;
+                        item.style.color = 'rgb(255, 0, 0)';
+                    }
+                    
+                })
+                game.board[randomEmptyBox] = player2.sign
                 game.lastSign = player2.sign;
-                playerTurn--
+                playerTurn--;
             }
         }
+
         game.checkWinner(ev);
     }
 })();
