@@ -15,22 +15,22 @@ let pvc = document.querySelector('#pvc')
 let menuButton = document.querySelector('.back')
 let playAgain = document.querySelector('.again')
 let winner = document.querySelector('.winner')
+let score = document.querySelector('.scores')
 
 
 
 let playerTurn = 1;
 
 
-const Players = (name,sign) => {
-    return {name, sign};
+const Players = (name,sign,score) => {
+    return {name, sign, score};
 }
 
-let player1 = Players('p1','X');
-let player2 = Players('p2','O');
+let player1 = Players('p1','X',0);
+let player2 = Players('p2','O',0);
 let boxesIds = boxes.map(sign => sign.id);
 let gameOver = false;
 let gameMode = '';
-
 
 
 
@@ -129,11 +129,13 @@ const game = (() => {
         // Diagonal win
         if(game.isDiagonal(game.board)){
             if(game.lastSign === 'X'){
+                player1.score++
                 winner.textContent = 'Winner is Player 1!';
                 disableGame();
                 colorResult();
             }
             else if(game.lastSign === 'O'){
+                player2.score++
                 winner.textContent = 'Winner is Player 2!';
                 disableGame();
                 colorResult();
@@ -142,12 +144,14 @@ const game = (() => {
         // Row win
         else if(game.isRow(game.board)){
             if(game.lastSign === 'X'){
+                player1.score++
                 winner.textContent = 'Winner is Player 1!';
                 disableGame();
                 colorResult();
     
             }
             else if(game.lastSign === 'O'){
+                player2.score++
                 winner.textContent = 'Winner is Player 2!';
                 disableGame();
                 colorResult();
@@ -156,11 +160,13 @@ const game = (() => {
         // Column win
         else if(game.isColumn(game.board)){
             if(game.lastSign === 'X'){
+                player1.score++
                 winner.textContent = 'Winner is Player 1!';
                 disableGame();
                 colorResult();
             }
             else if(game.lastSign === 'O'){
+                player2.score++
                 winner.textContent = 'Winner is Player 2!';
                 disableGame();
                 colorResult();
@@ -168,10 +174,13 @@ const game = (() => {
         }
         // Tie
         else if(game.board.includes('') === false &&game.board.length === 9 && game.board.includes(undefined) == false){
+            winner.textContent = 'DRAW';
+            disableGame();
             boxes.forEach(element => {
                 element.style.backgroundColor = 'black';
             });
         }
+        score.textContent = `${player1.score} : ${player2.score}`
     }
     
     function disableGame() {
@@ -231,7 +240,6 @@ const displayController = (() => {
         }
         else{
             alert('Choose Game Mode');
-            console.log(gameMode);
         }
     })
 
@@ -259,6 +267,9 @@ const displayController = (() => {
         playAgain.style.display = 'none';
         gameMode = '';
         menuButton.style.display = 'none';
+        player1.score = 0;
+        player2.score = 0;
+        score.textContent = `${player1.score} : ${player2.score}`
         resetGame();
     }
 
