@@ -198,17 +198,14 @@ const game = (() => {
 
 const displayController = (() => {
     pvp.addEventListener('click', () => {
-        console.log('pvp');
         gameMode = 'pvp';
     })
     pvc.addEventListener('click', () => {
-        console.log('pvc');
         gameMode = 'pvc';
     })
 
     play.addEventListener('click', () => {
         if(gameMode === 'pvp'){
-            console.log('pvp');
             wrapper.style.display = 'block';
             menu.style.marginTop = '50px';
             play.style.display = 'none';
@@ -299,34 +296,38 @@ const displayController = (() => {
             ev.target.style.color = 'white';
             game.board[ev.target.id] = player1.sign
             game.lastSign = player1.sign;
-            computerPlay();
-            function computerPlay() {
-                filledBoxes = boxes.map(box => box.textContent !== '')
-                const findPositions = (first, second) => {
-                    const indexArr = [];
-                    first.forEach((element, index) => {
-                       if(second.includes(element)){
-                          indexArr.push(index);
-                       };
-                    });
-                    return indexArr;
-                };
-                const falseArr = [false];
-                const indexArr = findPositions(filledBoxes,falseArr);
-                const randomEmptyBox = indexArr[Math.floor(Math.random() * indexArr.length)];
-                boxes.forEach((item) => {
-                    if(item.id == randomEmptyBox){
-                        item.textContent = player2.sign;
-                        item.style.color = 'rgb(255, 0, 0)';
-                    }
-                    
-                })
-                game.board[randomEmptyBox] = player2.sign
-                game.lastSign = player2.sign;
+            game.checkWinner(ev);
+            playerTurn++
+            if(playerTurn === 2){
+                computerPlay();
+                function computerPlay() {
+                    filledBoxes = boxes.map(box => box.textContent !== '')
+                    const findPositions = (first, second) => {
+                        const indexArr = [];
+                        first.forEach((element, index) => {
+                            if(second.includes(element)){
+                                indexArr.push(index);
+                            };
+                        });
+                        return indexArr;
+                    };
+                    const falseArr = [false];
+                    const indexArr = findPositions(filledBoxes,falseArr);
+                    const randomEmptyBox = indexArr[Math.floor(Math.random() * indexArr.length)];
+                    boxes.forEach((item) => {
+                        if(item.id == randomEmptyBox){
+                            item.textContent = player2.sign;
+                            item.style.color = 'rgb(255, 0, 0)';
+                        }
+                        
+                    })
+                    game.board[randomEmptyBox] = player2.sign
+                    game.lastSign = player2.sign;
+                }
+                game.checkWinner(ev);
+                playerTurn--
             }
         }
-
-        game.checkWinner(ev);
     }
 })();
 
