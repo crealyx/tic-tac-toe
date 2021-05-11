@@ -93,6 +93,15 @@ body .players {
       justify-content: space-around;
 }
 
+body .winner {
+  display: none;
+  text-align: center;
+  margin-top: 30px;
+  font-family: 'Krona One', sans-serif;
+  color: #ac0000;
+  font-size: 2rem;
+}
+
 body .button-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -100,7 +109,7 @@ body .button-wrapper {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-top: 100px;
+  margin-top: 30px;
 }
 
 body .button-wrapper .play {
@@ -109,6 +118,45 @@ body .button-wrapper .play {
   border: 2px solid black;
   background-color: #b30000;
   color: white;
+}
+
+body .button-wrapper .again {
+  display: none;
+  width: 120px;
+  height: 50px;
+  border: 2px solid black;
+  background-color: #b30000;
+  color: white;
+}
+
+body .button-wrapper .again:hover {
+  background-color: #5a0000;
+}
+
+body .button-wrapper .again:active {
+  background-color: white;
+  color: black;
+  font-size: 0.8rem;
+}
+
+body .button-wrapper .back {
+  display: none;
+  margin: 0px 20px;
+  width: 120px;
+  height: 50px;
+  border: 2px solid black;
+  background-color: #b30000;
+  color: white;
+}
+
+body .button-wrapper .back:hover {
+  background-color: #5a0000;
+}
+
+body .button-wrapper .back:active {
+  background-color: white;
+  color: black;
+  font-size: 0.8rem;
 }
 
 body .wrapper {

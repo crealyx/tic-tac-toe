@@ -12,6 +12,9 @@ let modeButton = Array.from(document.querySelectorAll('.game-mode'))
 let players = document.querySelector('.players')
 let pvp = document.querySelector('#pvp')
 let pvc = document.querySelector('#pvc')
+let menuButton = document.querySelector('.back')
+let playAgain = document.querySelector('.again')
+let winner = document.querySelector('.winner')
 
 
 
@@ -122,15 +125,16 @@ const game = (() => {
         return false;
     }
     function checkWinner() {
+        winner.style.display = 'block';
         // Diagonal win
         if(game.isDiagonal(game.board)){
             if(game.lastSign === 'X'){
-                console.log('Player 1 WON');
+                winner.textContent = 'Winner is Player 1!';
                 disableGame();
                 colorResult();
             }
             else if(game.lastSign === 'O'){
-                console.log('Player 2 WON');
+                winner.textContent = 'Winner is Player 2!';
                 disableGame();
                 colorResult();
             }
@@ -138,13 +142,13 @@ const game = (() => {
         // Row win
         else if(game.isRow(game.board)){
             if(game.lastSign === 'X'){
-                console.log('Player 1 WON');
+                winner.textContent = 'Winner is Player 1!';
                 disableGame();
                 colorResult();
     
             }
             else if(game.lastSign === 'O'){
-                console.log('Player 2 WON');
+                winner.textContent = 'Winner is Player 2!';
                 disableGame();
                 colorResult();
             }
@@ -152,12 +156,12 @@ const game = (() => {
         // Column win
         else if(game.isColumn(game.board)){
             if(game.lastSign === 'X'){
-                console.log('Player 1 WON');
+                winner.textContent = 'Winner is Player 1!';
                 disableGame();
                 colorResult();
             }
             else if(game.lastSign === 'O'){
-                console.log('Player 2 WON');
+                winner.textContent = 'Winner is Player 2!';
                 disableGame();
                 colorResult();
             }
@@ -185,41 +189,87 @@ const game = (() => {
 
 const displayController = (() => {
     pvp.addEventListener('click', () => {
+        console.log('pvp');
         gameMode = 'pvp';
     })
     pvc.addEventListener('click', () => {
+        console.log('pvc');
         gameMode = 'pvc';
     })
 
     play.addEventListener('click', () => {
-        wrapper.style.display = 'block';
-        menu.style.marginTop = '50px';
-        play.style.display = 'none';
-        modeButton.forEach((item) => {
-            item.style.display = 'none';
-        })
-        players.style.display = 'flex';
-
         if(gameMode === 'pvp'){
+            console.log('pvp');
+            wrapper.style.display = 'block';
+            menu.style.marginTop = '50px';
+            play.style.display = 'none';
+            modeButton.forEach((item) => {
+                item.style.display = 'none';
+            })
+            players.style.display = 'flex';
+            playAgain.style.display = 'block';
+            menuButton.style.display = 'block';
             gameBoard.addEventListener('click',playerVsPlayer);
+            playAgain.addEventListener('click',resetGame);
+            menuButton.addEventListener('click',mainMenu);
         }
+
         else if(gameMode === 'pvc'){
+            console.log('pvc');
+            wrapper.style.display = 'block';
+            menu.style.marginTop = '50px';
+            play.style.display = 'none';
+            modeButton.forEach((item) => {
+                item.style.display = 'none';
+            })
+            players.style.display = 'flex';
+            playAgain.style.display = 'block';
+            menuButton.style.display = 'block';
             gameBoard.addEventListener('click',playerVsComputer);
+            playAgain.addEventListener('click',resetGame);
+            menuButton.addEventListener('click',mainMenu);
+        }
+        else{
+            alert('Choose Game Mode');
+            console.log(gameMode);
         }
     })
 
-    
+    function resetGame() {
+        game.board = [];
+        game.winnerArr = [];
+        playerTurn = 1;
+        boxes.forEach(box => {
+            box.textContent = '';
+            box.style.backgroundColor = '#003B63';
+        });
+        winner.style.display = 'none';
+        winner.textContent = '';
+        gameOver = false;
+    }
+
+    function mainMenu() {
+        wrapper.style.display = 'none';
+        menu.style.marginTop = '200px';
+        play.style.display = 'block';
+        modeButton.forEach((item) => {
+            item.style.display = 'flex';
+        })
+        players.style.display = 'none';
+        playAgain.style.display = 'none';
+        gameMode = '';
+        menuButton.style.display = 'none';
+        resetGame();
+    }
 
     function playerVsPlayer(ev) {
-        if(ev.target.classList.contains('boxes') && boxesIds.includes(ev.target.id)){
+        if(ev.target.classList.contains('boxes') && boxesIds.includes(ev.target.id)&& gameMode === 'pvp'){
             if(playerTurn === 1 && ev.target.textContent === '' && gameOver === false){
-                console.log(boxes);
                 ev.target.textContent = player1.sign;
                 ev.target.style.color = 'white';
                 game.board[ev.target.id] = player1.sign
                 game.lastSign = player1.sign;
                 playerTurn++
-                console.log(game.board);
             }
             else if(playerTurn === 2 && ev.target.textContent === '' && gameOver === false){
                 ev.target.textContent = player2.sign;
@@ -233,14 +283,12 @@ const displayController = (() => {
     }
 
     function playerVsComputer(ev) {
-        if(ev.target.classList.contains('boxes') && boxesIds.includes(ev.target.id) && playerTurn === 1 && ev.target.textContent === '' && gameOver === false){
+        if(ev.target.classList.contains('boxes') && boxesIds.includes(ev.target.id) && playerTurn === 1 && ev.target.textContent === '' && gameOver === false && gameMode === 'pvc'){
             ev.target.textContent = player1.sign;
             ev.target.style.color = 'white';
             game.board[ev.target.id] = player1.sign
             game.lastSign = player1.sign;
-            playerTurn++;
             computerPlay();
-            console.log(game.board);
             function computerPlay() {
                 filledBoxes = boxes.map(box => box.textContent !== '')
                 const findPositions = (first, second) => {
@@ -256,13 +304,7 @@ const displayController = (() => {
                 const indexArr = findPositions(filledBoxes,falseArr);
                 const randomEmptyBox = indexArr[Math.floor(Math.random() * indexArr.length)];
                 boxes.forEach((item) => {
-                    console.log(item);
-                    console.log(randomEmptyBox);
-                    console.log(item.id);
                     if(item.id == randomEmptyBox){
-                        console.log(item);
-                        console.log(item.textContent);
-                        console.log(randomEmptyBox);
                         item.textContent = player2.sign;
                         item.style.color = 'rgb(255, 0, 0)';
                     }
@@ -270,7 +312,6 @@ const displayController = (() => {
                 })
                 game.board[randomEmptyBox] = player2.sign
                 game.lastSign = player2.sign;
-                playerTurn--;
             }
         }
 
